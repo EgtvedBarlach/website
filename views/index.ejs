@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title><%= profile.name %> — Portfolio</title>
+  <meta name="description" content="Business card / portfolio for <%= profile.name %>." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<script src="/site.js"></script>
+
+<body>
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <a class="brand" href="#top">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__name"><%= profile.name %></span>
+      </a>
+
+      <nav class="nav">
+        <a href="#work">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="topbar__cta">
+        <a class="btn btn--primary" href="mailto:<%= profile.email %>">Email</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="wrap">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__left">
+        <h1 class="hero__title"><%= profile.headline %></h1>
+        <p class="hero__intro"><%= profile.intro %></p>
+
+        <div class="hero__links" role="list">
+          <% profile.links.forEach(l => { %>
+            <a
+              role="listitem"
+              class="btn <%= l.kind === 'primary' ? 'btn--primary' : 'btn--ghost' %>"
+              href="<%= l.href %>"
+              <%= (l.href.startsWith('http') ? 'target="_blank" rel="noreferrer"' : '') %>
+            ><%= l.label %></a>
+          <% }) %>
+        </div>
+
+        <div class="hero__meta">
+          <div class="metaRow">
+            <span class="metaKey">Tagline</span>
+            <span class="metaVal"><%= profile.tagline %></span>
+          </div>
+          <div class="metaRow">
+            <span class="metaKey">Location</span>
+            <span class="metaVal"><%= profile.location %></span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero__right" aria-label="Business card">
+        <div class="card">
+          <div class="card__top">
+            <img class="avatar" src="/avatar.svg" alt="" />
+            <div>
+              <div class="card__name"><%= profile.name %></div>
+              <div class="card__role"><%= profile.tagline %></div>
+            </div>
+          </div>
+
+          <div class="card__facts">
+            <% profile.facts.forEach(f => { %>
+              <div class="fact">
+                <div class="fact__k"><%= f.k %></div>
+                <div class="fact__v"><%= f.v %></div>
+              </div>
+            <% }) %>
+          </div>
+
+          <div class="card__contact">
+            <a class="linkRow" href="mailto:<%= profile.email %>">
+              <span class="linkRow__k">Email</span>
+              <span class="linkRow__v"><%= profile.email %></span>
+            </a>
+            <a class="linkRow" href="tel:<%= profile.phone.replace(/\s+/g,'') %>">
+              <span class="linkRow__k">Phone</span>
+              <span class="linkRow__v"><%= profile.phone %></span>
+            </a>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats" aria-label="Stats">
+      <% profile.stats.forEach(s => { %>
+        <div class="stat">
+          <div class="stat__value statCounter" data-value="<%= s.value %>"><%= s.value %></div>
+          <div class="stat__label"><%= s.label %></div>
+        </div>
+      <% }) %>
+    </section>
+
+    <!-- WORK -->
+    <section id="work" class="section">
+      <div class="section__head">
+        <h2>Selected work</h2>
+        <p>Real projects, real outcomes. Short and scannable just like a portfolio should be.</p>
+      </div>
+
+      <div class="grid">
+        <% profile.projects.forEach(p => { %>
+          <article class="project">
+            <div class="project__top">
+              <h3><%= p.title %></h3>
+              <p class="muted"><%= p.description %></p>
+            </div>
+
+            <ul class="bullets">
+              <% p.bullets.forEach(b => { %>
+                <li><%= b %></li>
+              <% }) %>
+            </ul>
+
+            <div class="chips">
+              <% p.tech.forEach(t => { %>
+                <span class="chip"><%= t %></span>
+              <% }) %>
+            </div>
+
+            <div class="project__links">
+              <% p.links.forEach(l => { %>
+                <a
+                  class="smallLink <%= l.disabled ? 'isDisabled' : '' %>"
+                  href="<%= l.href %>"
+                  <%= l.disabled ? 'aria-disabled="true" tabindex="-1"' : '' %>
+                  <%= (!l.disabled && l.href.startsWith('http') ? 'target="_blank" rel="noreferrer"' : '') %>
+                ><%= l.label %></a>
+              <% }) %>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <div class="section__head">
+        <h2>Skills & tools</h2>
+        <p>Things I use to ship and maintain solid systems.</p>
+      </div>
+
+      <div class="chips chips--big">
+        <% profile.tech.forEach(t => { %>
+          <span class="chip"><%= t %></span>
+        <% }) %>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section section--last">
+      <div class="section__head">
+        <h2>Contact</h2>
+        <p>If you want to collaborate, hire, or just talk ideas—reach out.</p>
+      </div>
+
+      <div class="contactCard">
+        <div class="contactCard__row">
+          <span class="contactCard__k">Email</span>
+          <a class="contactCard__v" href="mailto:<%= profile.email %>"><%= profile.email %></a>
+        </div>
+        <div class="contactCard__row">
+          <span class="contactCard__k">Phone</span>
+          <a class="contactCard__v" href="tel:<%= profile.phone.replace(/\s+/g,'') %>"><%= profile.phone %></a>
+        </div>
+        <div class="contactCard__row">
+          <span class="contactCard__k">Location</span>
+          <span class="contactCard__v"><%= profile.location %></span>
+        </div>
+
+        <div class="contactCard__cta">
+          <a class="btn btn--primary" href="mailto:<%= profile.email %>?subject=Hello%20Lucas">Send email</a>
+          <a class="btn btn--ghost" href="#work">View work</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>© <%= new Date().getFullYear() %> <%= profile.name %></span>
+      <span class="footer__sep">•</span>
+      <span>Built with Node.js + Express</span>
+    </footer>
+  </main>
+</body>
+<div class="glow" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
+</html>
