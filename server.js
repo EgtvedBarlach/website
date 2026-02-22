@@ -17,7 +17,7 @@ const profile = {
 
   // Replace these with your real links
   links: [
-    { label: "Email", href: "mailto:lucas@egtvedbarlach.dk", kind: "ghost" },
+    { label: "Email", href: "mailto:lucas@egtvedbarlach.dk", kind: "primary" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/lucas-egtved-barlach", kind: "ghost" },
     { label: "GitHub", href: "https://github.com/TheBarlach", kind: "ghost" },
     { label: "Projects", href: "#work", kind: "ghost" },
